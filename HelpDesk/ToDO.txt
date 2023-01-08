@@ -1,0 +1,43 @@
+﻿Tests
+xUnit
+Fluent Assertions
+
+
+
+
+
+
+
+Docker Compose:
+{
+	Metrics : 
+	{
+		prometeus
+		AppMetrics
+		Grafana
+	}
+
+	Cashe : 
+	{
+		Redis
+	}
+
+	AMQP : 
+	{
+		Apache.Kafka
+		RabbitMQ
+	}
+
+	DataBases :
+	{
+		PostgreSQL
+		MS SQL
+		Maria DB
+	}
+}
+
+
+
+
+
+

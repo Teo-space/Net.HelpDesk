@@ -1,0 +1,21 @@
+global:
+  scrape_interval: 30s
+  scrape_timeout: 10s
+
+rule_files:
+
+scrape_configs:
+  - job_name: services
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['prometheus:9090']
+
+  - job_name: metrics-text
+    metrics_path: /metrics-text
+    static_configs:
+      - targets: ['prometheus:8090']
+
+  - job_name: 'prometheus_app'
+    static_configs:
+      - targets: ['host.docker.internal:8085']
+

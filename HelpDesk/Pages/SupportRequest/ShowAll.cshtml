@@ -1,0 +1,53 @@
+﻿@page
+@model Pages.SupportRequest.ShowAllModel
+@inject SignInManager<DataBase.Identity.AppIdentityUser> SignInManager
+@inject UserManager<DataBase.Identity.AppIdentityUser> UserManager
+
+@using global::Infrastructure.ViewComponents
+
+
+<h3>@User.ClaimName()</h3>
+<h3>@User.ClaimNameIdentifier()</h3>
+
+@{
+    //@Html.Table(@Model.Result)
+}
+
+@{
+    //public record ResultDto(Guid Id, string Name, string Description, Category Category, Status Status, string CreatorName);
+    //@Model.Result
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category</th>
+                <th scope="col">Status</th>
+                <th scope="col">Creator</th>
+                <th scope="col">Detailing</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < @Model.Result.Count; i++)
+            {
+                <tr>
+                    @{
+                        var row = @Model.Result[i];
+                        <th scope="row">@i</th>
+                        <td>@row.Name</td>
+                        <td>@row.Description</td>
+                        <td>@row.Category</td>
+                        <td>@row.Status</td>
+                        <td>@row.CreatorName</td>
+                        <td><a asp-page="/SupportRequest/Detailing" asp-route-Id=@row.Id>Detailing</a></td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
+}
+
