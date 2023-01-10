@@ -10,7 +10,15 @@ namespace Infrastructure.SQRS
             services.TryAddSingleton<ICommandDispatcher, CommandDispatcher>();
             services.TryAddSingleton<IQueryDispatcher, QueryDispatcher>();
 
-            /*
+			//For end to end pipe line or decorator for 
+			//ICommandDispatcher
+			//IQueryDispatcher
+
+
+			//Scrutor Example
+
+
+			/*
 			// INFO: Using https://www.nuget.org/packages/Scrutor for registering all Query and Command handlers by convention
 			services.Scan(selector =>
 			{
@@ -33,8 +41,8 @@ namespace Infrastructure.SQRS
 						.WithSingletonLifetime();
 			});
 			*/
-        }
-    }
+		}
+	}
 
 
 

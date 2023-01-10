@@ -2,6 +2,23 @@
 @model HelpDesk.Pages.SupportRequest.DetailModel
 @{
 }
-<h1>Id: @Model.Id</h1>
 
 
+<h1>Id: @Model.Result.Id</h1>
+
+
+
+<h4>CreatorName: @Model.Result.CreatorName</h4>
+<h4>CreatorEmail: @Model.Result.CreatorEmail</h4>
+
+<h4>Name: @Model.Result.Name</h4>
+<h4>Description: @Model.Result.Description</h4>
+
+<h4>Category: @Model.Result.Category</h4>
+<h4>Status: @Model.Result.Status</h4>
+
+
+
+todo :
+form
+post handler for save description
