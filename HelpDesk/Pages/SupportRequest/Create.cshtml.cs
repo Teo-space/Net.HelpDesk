@@ -56,11 +56,11 @@ namespace HelpDesk.Pages.SupportRequest
 		{
 			public CreateSupportRequestCommandValidator()
 			{
-				RuleFor(x => x.Name).NotEmpty().MaximumLength(100);
-				RuleFor(x => x.Description).NotEmpty().MaximumLength(1000);
-				RuleFor(x => x.CreatorId).NotEmpty();
-				RuleFor(x => x.CreatorName).NotEmpty();
-				RuleFor(x => x.CreatorEmail).NotEmpty();
+				RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
+				RuleFor(x => x.Description).NotEmpty().MaximumLength(200);
+				RuleFor(x => x.CreatorId).NotNull().NotEmpty();
+				RuleFor(x => x.CreatorName).NotEmpty().MaximumLength(60);
+				RuleFor(x => x.CreatorEmail).NotEmpty().MaximumLength(60);
 			}
 		}
 
