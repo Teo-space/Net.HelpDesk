@@ -64,11 +64,8 @@ namespace HelpDesk.Pages.SupportRequest
 			}
 		}
 
-		public class CreateSupportRequestHandler : IRequestHandler<CreateSupportRequestCommand, Guid>
+		public record CreateSupportRequestHandler1(DataContext context) : IRequestHandler<CreateSupportRequestCommand, Guid>
 		{
-			private readonly DataContext context;
-			public CreateSupportRequestHandler(DataContext context) => this.context = context;
-
 			public async Task<Guid> Handle(CreateSupportRequestCommand request, CancellationToken token)
 			{
 				var Task = new DataBase.Models.SupportRequest()
@@ -76,9 +73,9 @@ namespace HelpDesk.Pages.SupportRequest
 					Id = Guid.NewGuid(),
 
 					CreatorId = request.CreatorId,
-                    CreatorName = request.CreatorName,
+					CreatorName = request.CreatorName,
 					CreatorEmail = request.CreatorEmail,
-                    Created = DateTime.Now,
+					Created = DateTime.Now,
 
 					Name = request.Name,
 					Description = request.Description,
@@ -91,8 +88,7 @@ namespace HelpDesk.Pages.SupportRequest
 				await this.context.SaveChangesAsync(token);
 				return Task.Id;
 			}
-
-
 		}
+
 	}
 }

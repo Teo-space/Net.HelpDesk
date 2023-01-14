@@ -17,9 +17,12 @@ public class DetailModel : PageModel
 
 	public ResultDto GetResult { get; set; }
 
+
 	public record ResultDto(Guid Id, string CreatorName, string CreatorEmail, DateTime Created, string Name, string Description, Category Category, Status Status);
 
+
 	public record DetailQuery(Guid Id) : IRequest<ResultDto>;
+
 
 	public class DetailQueryValidator : AbstractValidator<DetailQuery>
 	{
@@ -30,11 +33,8 @@ public class DetailModel : PageModel
 	}
 
 
-	public class QueryHandler : IRequestHandler<DetailQuery, ResultDto>
+	public record QueryHandler(DataContext context) : IRequestHandler<DetailQuery, ResultDto>
 	{
-		private readonly DataContext context;
-		public QueryHandler(DataContext context) => this.context = context;
-
 		public async Task<ResultDto?> Handle(DetailQuery request, CancellationToken token)
 		{
 			return (await context.SupportRequests
@@ -53,10 +53,13 @@ public class DetailModel : PageModel
 
 	public async Task OnPost() => GetResult = await mediator.Send(SetDescription);
 
+
 	[BindProperty]
 	public SetDescriptionCommand SetDescription { get; set; }
 
+
 	public record SetDescriptionCommand(Guid Id, string Description) : IRequest<ResultDto>;
+
 
 	public class SetDescriptionCommandValidator : AbstractValidator<SetDescriptionCommand>
 	{
@@ -66,11 +69,10 @@ public class DetailModel : PageModel
 			RuleFor(x => x.Description).NotNull().NotEmpty().MaximumLength(200);
 		}
 	}
-	public class SetDescriptionCommandHandler : IRequestHandler<SetDescriptionCommand, ResultDto>
-	{
-		private readonly DataContext context;
-		public SetDescriptionCommandHandler(DataContext context) => this.context = context;
 
+
+	public record SetDescriptionCommandHandler(DataContext context) : IRequestHandler<SetDescriptionCommand, ResultDto>
+	{
 		public async Task<ResultDto?> Handle(SetDescriptionCommand request, CancellationToken token)
 		{
 			var supportRequest = await context.SupportRequests.FirstOrDefaultAsync(x => x.Id == request.Id, token);

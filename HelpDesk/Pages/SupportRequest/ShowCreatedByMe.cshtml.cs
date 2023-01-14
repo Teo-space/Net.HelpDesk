@@ -9,67 +9,63 @@ using FluentValidation;
 using DataBase.Identity;
 using Mapster;
 
-namespace HelpDesk.Pages.SupportRequest
+
+namespace HelpDesk.Pages.SupportRequest;
+
+
+public class ShowCreatedByMeModel : PageModel
 {
-    public class ShowCreatedByMeModel : PageModel
+    private readonly IMediator mediator;
+    private readonly SignInManager<AppIdentityUser> signInManager;
+    private readonly UserManager<AppIdentityUser> UserManager;
+    private readonly ILogger<ShowCreatedByMeModel> logger;
+
+    public ShowCreatedByMeModel(
+			                        IMediator mediator, 
+			                        SignInManager<AppIdentityUser> signInManager,
+                                    UserManager<AppIdentityUser> UserManager,
+                                    ILogger<ShowCreatedByMeModel> logger)
 	{
-		private readonly IMediator mediator;
-		private readonly SignInManager<AppIdentityUser> signInManager;
-		private readonly UserManager<AppIdentityUser> UserManager;
-        private readonly ILogger<ShowCreatedByMeModel> logger;
-        public ShowCreatedByMeModel(
-			IMediator mediator, 
-			SignInManager<AppIdentityUser> signInManager,
-            UserManager<AppIdentityUser> UserManager,
-            ILogger<ShowCreatedByMeModel> logger)
-		{
-            this.mediator = mediator;
-			this.signInManager = signInManager;
-			this.UserManager = UserManager;
-			this.logger = logger;
-            //UserManager.GetUserId(User) ?? User.ClaimNameIdentifier()
-        }
+        this.mediator = mediator;
+        this.signInManager = signInManager;
+        this.UserManager = UserManager;
+        this.logger = logger;
+    }
 
-        public async Task OnGet()
-		{
-            var guid = Guid.Parse(User.ClaimNameIdentifier());
-			Result = await mediator.Send(new ShowCreatedByMeQuery(guid));
-            //string email = User.ClaimEmail();
-            //Result = await mediator.Send(new ShowCreatedByMeQuery(email));
-        }
+    public async Task OnGet()
+	{
+        var guid = Guid.Parse(User.ClaimNameIdentifier());
+		Result = await mediator.Send(new ShowCreatedByMeQuery(guid));
+        //string email = User.ClaimEmail();
+        //Result = await mediator.Send(new ShowCreatedByMeQuery(email));
+    }
 
-        public record ResultDto(Guid CreatorId, string Name, string Description, Category Category, Status Status, string CreatorName);
-        public List<ResultDto> Result { get; protected set; } = new();
+    public record ResultDto(Guid CreatorId, string Name, string Description, Category Category, Status Status, string CreatorName);
+
+    public List<ResultDto> Result { get; protected set; } = new();
 
 
-        //public record ShowCreatedByMeQuery(string Email) : IRequest<List<DataBase.Models.SupportRequest>>;
-        public record ShowCreatedByMeQuery(Guid UserId) : IRequest<List<ResultDto>>;
-        public class ShowCreatedByMeQueryValidator : AbstractValidator<ShowCreatedByMeQuery>
+    //public record ShowCreatedByMeQuery(string Email) : IRequest<List<DataBase.Models.SupportRequest>>;
+    public record ShowCreatedByMeQuery(Guid UserId) : IRequest<List<ResultDto>>;
+    public class ShowCreatedByMeQueryValidator : AbstractValidator<ShowCreatedByMeQuery>
+    {
+        public ShowCreatedByMeQueryValidator()
         {
-            public ShowCreatedByMeQueryValidator()
-            {
-                RuleFor(x => x.UserId).NotNull();
-            }
+            RuleFor(x => x.UserId).NotNull().NotEmpty();
         }
+    }
 
 
-        public class ShowCreatedByMeQueryHandler : IRequestHandler<ShowCreatedByMeQuery, List<ResultDto>>
-		{
-			private readonly DataContext context;
-			public ShowCreatedByMeQueryHandler(DataContext context)
-			{
-				this.context = context;
-			}
+    public record ShowCreatedByMeQueryHandler(DataContext context) : IRequestHandler<ShowCreatedByMeQuery, List<ResultDto>>
+	{
+		public async Task<List<ResultDto>>Handle(ShowCreatedByMeQuery request, CancellationToken token) 
+            => await context.SupportRequests
+            .AsNoTracking()
+            .Where(x => x.CreatorId == request.UserId)
+            //.Where(x => x.CreatorEmail == request.Email)
+            .ProjectToType<ResultDto>()
+            .ToListAsync(token);
 
-			public async Task<List<ResultDto>>Handle(ShowCreatedByMeQuery request, CancellationToken token) 
-                => await context.SupportRequests
-                .AsNoTracking()
-                .Where(x => x.CreatorId == request.UserId)
-                //.Where(x => x.CreatorEmail == request.Email)
-                .ProjectToType<ResultDto>()
-                .ToListAsync(token);
+    }
 
-        }
-
-	}
 }
