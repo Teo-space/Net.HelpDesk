@@ -60,7 +60,7 @@ namespace HelpDesk.Pages.SupportRequest
 				RuleFor(x => x.Description).NotEmpty().MaximumLength(200);
 				RuleFor(x => x.CreatorId).NotNull().NotEmpty();
 				RuleFor(x => x.CreatorName).NotEmpty().MaximumLength(60);
-				RuleFor(x => x.CreatorEmail).NotEmpty().MaximumLength(60);
+				RuleFor(x => x.CreatorEmail).NotEmpty().EmailAddress();
 			}
 		}
 

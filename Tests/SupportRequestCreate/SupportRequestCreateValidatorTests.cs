@@ -5,7 +5,8 @@ using static HelpDesk.Pages.SupportRequest.CreateModel;
 public class SupportRequestCreateValidatorTests
 {
 
-	static CreateSupportRequestCommandValidator validator = new CreateSupportRequestCommandValidator();
+	CreateSupportRequestCommandValidator validator = new CreateSupportRequestCommandValidator();
+
 
 	[Fact]
 	public void TestIsValid()
@@ -34,10 +35,13 @@ public class SupportRequestCreateValidatorTests
 		validator.Validate(testModel).IsValid.Should().BeFalse();
 	}
 	[Fact]
-	public void TestNameBig()
+	public void TestNameMaximumLength()
 	{
 		var testModel = new CreateSupportRequestCommand(
-			"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm",
+			@"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm
+qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm
+qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm
+qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm",
 			"Description",
 			Guid.NewGuid(),
 			"creator@gmail.com",
@@ -60,7 +64,7 @@ public class SupportRequestCreateValidatorTests
 		validator.Validate(testModel).IsValid.Should().BeFalse();
 	}
 	[Fact]
-	public void TestDescriptionBig()
+	public void TestDescriptionMaximumLength()
 	{
 		var testModel = new CreateSupportRequestCommand(
 			"Name",
@@ -101,17 +105,19 @@ qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqw
 		validator.Validate(testModel).IsValid.Should().BeFalse();
 	}
 	[Fact]
-	public void TestCreatorNameInvalid()
+	public void TestCreatorNameMaximumLength()
 	{
 		var testModel = new CreateSupportRequestCommand(
 			"Name",
 			"Description",
 			Guid.NewGuid(),
-			"creatorgmail.com",
+			"qwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnmqwertyuiopasdfghjklzxcvbnm",
 			"creator@gmail.com");
 
 		validator.Validate(testModel).IsValid.Should().BeFalse();
 	}
+
+
 
 	[Fact]
 	public void TestCreatorEmailEmpty()
