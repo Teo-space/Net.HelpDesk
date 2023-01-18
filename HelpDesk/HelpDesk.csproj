@@ -89,6 +89,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DataBase\SQLite\" />
     <Folder Include="Infrastructure\SharedCommands\" />
   </ItemGroup>
 

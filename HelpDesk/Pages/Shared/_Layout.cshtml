@@ -151,12 +151,7 @@
 
                 </div>
 
-
-                <div class="container-fluid row justify-content-end col-sm-2">
-                    <p class="nav navbar-text navbar-right font-effect-neon">@User?.Identity?.Name!</p>
-                </div>
-
-
+                <partial name="_LoginPartial"/>
             </div>
 
         </nav>
@@ -243,34 +238,34 @@
     <!-------------------------------------------------------------------------------------------------------------->
     <!-------------------------------------------------------------------------------------------------------------->
     <footer class="border-top fixed-bottom">
-        <div class="container-fluid row text-muted text-secondary font-Tangerine-20">
-            <div class="col justify-content-start">
+        <div class="container-fluid row ">
+            <div class="col justify-content-start text-muted text-secondary font-Tangerine-20">
                 &copy; 2023@(@DateTime.Now.Year != 2023 ? $" - {@DateTime.Now.Year}" : "") - Teo
             </div>
-            <div class="col justify-content-center">
+            <div class="col justify-content-center text-muted text-secondary">
                 @if (hostEnvironment.IsDevelopment())
 			    {
-				    @Html.Link("Claims", "/Infrastructure/Claims", LinkTarget._blank)
-				    @Html.Link("ErrrorHandle", "/Infrastructure/ErrrorHandle", LinkTarget._blank)
+                    @Html.Link("Claims", "/Infrastructure/Claims", LinkTarget._blank).AddClass("text-muted text-dark")
+                    @Html.Link("ErrrorHandle", "/Infrastructure/ErrrorHandle", LinkTarget._blank).AddClass("text-muted text-dark")
                 }
             </div>
-            <div class="col justify-content-between">
+            <div class="col justify-content-between text-muted text-secondary">
                 @if (hostEnvironment.IsDevelopment())
                 {
-                    @Html.Link("Counters", "/Infrastructure/Counters", LinkTarget._blank)
-                    @Html.Link("metrics", "/metrics", LinkTarget._parent)
+                    @Html.Link("Counters", "/Infrastructure/Counters", LinkTarget._blank).AddClass("text-muted text-dark")
+                    @Html.Link("metrics", "/metrics", LinkTarget._parent).AddClass("text-muted text-dark")
 
-                    @Html.Link("profiler.index", "/profiler/results-index", LinkTarget._self)
-                    @Html.Link("profiler.results", "/profiler/results", LinkTarget._top)
+                    @Html.Link("profiler.index", "/profiler/results-index", LinkTarget._self).AddClass("text-muted text-dark")
+                    @Html.Link("profiler.results", "/profiler/results", LinkTarget._top).AddClass("text-muted text-dark")
                     
 
-                    @Html.Link("Health", "/health", LinkTarget._blank)
+                    @Html.Link("Health", "/health", LinkTarget._blank).AddClass("text-muted text-dark")
                 }
             </div>
-            <div class="col justify-content-end">
+            <div class="col justify-content-end text-dark">
                 @if (hostEnvironment.IsDevelopment())
 			    {
-                    @Html.Link("Swagger", "/swagger", LinkTarget._blank)
+                    @Html.Link("Swagger", "/swagger", LinkTarget._blank).AddClass("text-muted text-dark")
                 }
             </div>
         </div>
