@@ -1,6 +1,12 @@
 ﻿@inject IHostEnvironment hostEnvironment
-
 @{
+    string AppName = "HelpDesk";
+    int NavBarLogoSIze = 55;
+    
+}
+@{
+    bool SideBarEnabled = false;
+
     SideBar
     .AddSubmenu("SubMenu 1")
     //.SetShow()
@@ -27,10 +33,8 @@
         ;
 
 }
-@{
-    string AppName = "HelpDesk";
-    int NavBarLogoSIze = 55;
-}
+
+
 
 
 
@@ -88,7 +92,6 @@
 
 <!--row overflow-auto  style="max-height:82vh;"-->
 <body class="mh-100 h-100 w-100 mw-100 overflow-hidden">
-
 
     <header class="sticky-top">
 
@@ -167,63 +170,67 @@
         <!--Position Container-->
         <div class="d-flex flex-row position-static border-1 border-dark">
 
-            <!--Sidebar     border border-1 border-dark -->
-            <div class="col-sm-2">
+            @if (SideBarEnabled)
+            {
+                <!--Sidebar     border border-1 border-dark -->
+                <div class="col-sm-2">
 
-                <nav class="nav position-fixed overflow-hidden col-sm-2  bg-light" style="max-height:82vh;">
-                    <div class="container-fluid overflow-scroll h-100 vh-100 mh-100 p-2">
+                    <nav class="nav position-fixed overflow-hidden col-sm-2  bg-light" style="max-height:82vh;">
+                        <div class="container-fluid overflow-scroll h-100 vh-100 mh-100 p-2">
 
-                        @foreach (var subMenu in SideBar.SubMenus.Values)
-                        {
-                            var GeneratedId = $"{subMenu.GetHashCode()}";
+                            @foreach (var subMenu in SideBar.SubMenus.Values)
+                            {
+                                var GeneratedId = $"{subMenu.GetHashCode()}";
 
-                            <div class="accordion  bg-light" id="SubmenuContainer_@GeneratedId">
+                                <div class="accordion  bg-light" id="SubmenuContainer_@GeneratedId">
 
-                                <div class="accordion-item bg-light border-0">
+                                    <div class="accordion-item bg-light border-0">
 
-                                    <h2 class="accordion-header"
+                                        <h2 class="accordion-header"
                                     id="SubmenuHeading_@GeneratedId">
-                                        <button class="accordion-button bg-light text-black font-monospace "
+                                            <button class="accordion-button bg-light text-black font-monospace "
                                             type="button"
                                             data-bs-toggle="collapse"
                                             data-bs-target="#SubmenuCollapse_@GeneratedId"
                                             aria-expanded="true"
                                             aria-controls="SubmenuCollapse @GeneratedId">
-                                            @subMenu.Name
-                                        </button>
-                                    </h2>
+                                                @subMenu.Name
+                                            </button>
+                                        </h2>
 
-                                    <div id="SubmenuCollapse_@GeneratedId"
+                                        <div id="SubmenuCollapse_@GeneratedId"
                                      class="accordion-collapse collapse @(subMenu.Show ? "show" : "")"
                                      aria-labelledby="SubmenuHeading_@GeneratedId"
                                      data-bs-parent="#SubmenuContainer_@GeneratedId">
-                                        <div class="accordion-body">
-                                            <ul class="flex-grow-1 text-dark">
-                                                @foreach (var link in subMenu.GetLinks())
-                                                {
-                                                    <li class="nav-item">
-                                                        <a class="text-dark text-decoration-none" asp-area="" asp-page="@link.Url">@link.Name</a>
-                                                    </li>
-                                                }
-                                            </ul>
+                                            <div class="accordion-body">
+                                                <ul class="flex-grow-1 text-dark">
+                                                    @foreach (var link in subMenu.GetLinks())
+                                                    {
+                                                        <li class="nav-item">
+                                                            <a class="text-dark text-decoration-none" asp-area="" asp-page="@link.Url">@link.Name</a>
+                                                        </li>
+                                                    }
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            }
+
+                            <div class="container-fluid h-25">
                             </div>
-                        }
-
-                        <div class="container-fluid h-25">
                         </div>
-                    </div>
-                </nav>
+                    </nav>
 
 
-            </div>
+                </div>
+
+            }
 
 
 
             <!--Body-->
-            <div class="col-sm-10 no-gutters">
+            <div class="@(SideBarEnabled ? "col-sm-10" : "col-sm-12") no-gutters">
                 <main class="page-content">
                     <div class="container border-1">
                         @RenderBody()
