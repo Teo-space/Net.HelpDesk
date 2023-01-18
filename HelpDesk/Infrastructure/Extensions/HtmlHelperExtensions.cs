@@ -6,6 +6,11 @@ namespace Extensions;
 
 public static class HtmlHelperExtensions
 {
+    public static HtmlTag Fluent<T>(this IHtmlHelper<T> helper, string tagName) => new HtmlTag(tagName);
+
+
+
+
     public static HtmlTag Link<T>(this IHtmlHelper<T> helper,
         string text,
         string Url,

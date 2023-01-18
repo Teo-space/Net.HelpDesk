@@ -64,7 +64,8 @@ namespace HelpDesk.Pages.SupportRequest
 			}
 		}
 
-		public record CreateSupportRequestHandler1(DataContext context) : IRequestHandler<CreateSupportRequestCommand, Guid>
+
+		public record CreateSupportRequestHandler(DataContext context) : IRequestHandler<CreateSupportRequestCommand, Guid>
 		{
 			public async Task<Guid> Handle(CreateSupportRequestCommand request, CancellationToken token)
 			{

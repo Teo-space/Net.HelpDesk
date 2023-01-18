@@ -6,16 +6,19 @@
 @using global::Infrastructure.ViewComponents
 
 
-<h3>@User.ClaimName()</h3>
-<h3>@User.ClaimNameIdentifier()</h3>
+
 
 @{
     //@Html.Table(@Model.Result)
+
+    //<h3>@User.ClaimName()</h3>
+    //<h3>@User.ClaimNameIdentifier()</h3>
 }
 
 @{
     //public record ResultDto(Guid Id, string Name, string Description, Category Category, Status Status, string CreatorName);
     //@Model.Result
+    <h3>All Tasks:</h3>
 
     <table class="table table-bordered table-striped table-hover">
         <thead class="table-dark">
@@ -27,6 +30,8 @@
                 <th scope="col">Status</th>
                 <th scope="col">Creator</th>
                 <th scope="col">Detailing</th>
+                <th scope="col">Take</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
@@ -42,6 +47,8 @@
                         <td>@row.Status</td>
                         <td>@row.CreatorName</td>
                         <td><a asp-page="/SupportRequest/Detailing" asp-route-Id=@row.Id>Detailing</a></td>
+                        <td><a asp-page="/SupportRequest/Detailing" asp-route-Id=@row.Id>Take</a></td>
+                        <td><a asp-page="/SupportRequest/Detailing" asp-route-Id=@row.Id>Delete</a></td>
                     }
                 </tr>
             }

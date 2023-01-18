@@ -1,0 +1,61 @@
+
+Pages
+ShowAll - Name	Description	Category	Status	Creator	Detailing	Take	Delete
+ShowCreatedByMe  - Name	Description	Category	Status	Creator	Detailing	Delete
+ShowCreatedByMe  - Name	Description	Category	Status	Creator	Detailing	Delete
+ShowProcessedByMe - Name	Description	Category	Status	Creator	Detailing	Done
+
+
+
+
+
+SR -> Templates
+Approval of support requests
+
+
+
+
+
+Tests
+xUnit
+Fluent Assertions
+
+
+
+
+
+
+
+Docker Compose:
+{
+	Metrics : 
+	{
+		prometeus
+		AppMetrics
+		Grafana
+	}
+
+	Cashe : 
+	{
+		Redis
+	}
+
+	AMQP : 
+	{
+		Apache.Kafka
+		RabbitMQ
+	}
+
+	DataBases :
+	{
+		PostgreSQL
+		MS SQL
+		Maria DB
+	}
+}
+
+
+
+
+
+
